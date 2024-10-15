@@ -3,6 +3,7 @@ public class Main {
         Lib myLib = new Lib();
         // System.out.println(myLib.charToInt('A'));
         // System.out.println(myLib.intToChar(65));
-        myLib.printNameAsAscii("Jonathan");
+        System.out.println("Jonathan");
+        myLib.printIntArray(myLib.stringAsIntArray("Jonathan"));
     }
 }

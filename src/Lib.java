@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Lib {
     public int charToInt(char character) {
         return character;
@@ -5,16 +7,15 @@ public class Lib {
     public char intToChar(int integer) {
         return (char) integer;
     }
-    public void printNameAsAscii(String name) {
+    public int[] stringAsIntArray(String name) {
         String[] nameArray = name.split("");
-        int i = 0;
-        for (String letter : nameArray) {
-            if (i == nameArray.length - 1) {
-                System.out.println(charToInt(letter.charAt(0)));
-            } else {
-                System.out.print(charToInt(letter.charAt(0)) + " ");
-            }
-            i++;
+        int[] intArray = new int[nameArray.length];
+        for (int i = 0; i < nameArray.length; i++) {
+            intArray[i] = charToInt(nameArray[i].charAt(0));
         }
+        return intArray;
+    }
+    public void printIntArray(int[] intArray) {
+        System.out.println(Arrays.toString(intArray));
     }
 }
