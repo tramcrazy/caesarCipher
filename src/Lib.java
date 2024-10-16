@@ -1,5 +1,3 @@
-import java.util.Arrays;
-
 public class Lib {
     public int charToInt(char character) {
         return character;
@@ -37,10 +35,13 @@ public class Lib {
                     newInt -= 26;
                 }
             }
-            if (originalInt > 96 && originalInt < 123) { // check if lowercase
+            else if (originalInt > 96 && originalInt < 123) { // check if lowercase
                 if (newInt > 122) { // if out of lowercase range
                     newInt -= 26;
                 }
+            }
+            else {
+                newInt = originalInt;
             }
             intArray[i] = newInt;
         }

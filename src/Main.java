@@ -7,6 +7,8 @@ public class Main {
         //System.out.println(myLib.encryptDecryptString("zzYY", 20, false));
         //System.out.println("DECRYPT: UFTU, key 1");
         //System.out.println(myLib.encryptDecryptString("UFTU", 1, true));
-        myLib.bruteForceString("UFTU", "TEST");
+        //myLib.bruteForceString("UFTU", "TEST");
+        System.out.println(myLib.encryptDecryptString("Open Evening", 14, false));
+        myLib.bruteForceString("Cdsb Sjsbwbu", "Open");
     }
 }
