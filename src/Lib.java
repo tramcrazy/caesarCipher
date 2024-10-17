@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Lib {
     public int charToInt(char character) {
         return character;
@@ -57,5 +59,87 @@ public class Lib {
                 System.out.println("Key: " + i);
             }
         }
+    }
+    public int[][] analyseFrequencies(String ciphertext) {
+        ciphertext = ciphertext.toUpperCase();
+        int[][] frequencies = new int[26][2];
+        int currentCode;
+        for (int i = 0; i < frequencies.length; i++) {
+            frequencies[i][0] = i + 65;
+            frequencies[i][1] = 0;
+        }
+        for (int i = 0; i < ciphertext.length(); i++) {
+            if (Character.isLetter(ciphertext.charAt(i))) {
+                currentCode = ciphertext.codePointAt(i);
+                frequencies[currentCode - 65][1] += 1;
+            }
+        }
+        return frequencies;
+    }
+    public void menu() {
+        Scanner menuScan = new Scanner(System.in);
+        String userPlaintext;
+        String userCiphertext;
+        String userCrib;
+        int userKey;
+        char selectedOption;
+        boolean running = true;
+        int[][] frequencyAnalysis;
+        while (running) {
+            System.out.print("""
+                               ---------------------------------
+                               Menu:
+                               (A)nalyse frequencies
+                               (E)ncrypt plaintext
+                               (D)ecrypt ciphertext
+                               (B)ruteforce ciphertext with crib
+                               (Q)uit
+                               ---------------------------------
+                               """);
+            System.out.print("Enter A/E/D/B/Q >>> ");
+            selectedOption = menuScan.nextLine().charAt(0);
+            switch (selectedOption) {
+                case 'A':
+                    System.out.print("Enter ciphertext >>> ");
+                    userCiphertext = menuScan.nextLine();
+                    frequencyAnalysis = analyseFrequencies(userCiphertext);
+                    System.out.println("Letter: Frequency");
+                    for (int[] row : frequencyAnalysis) {
+                        System.out.println(intToChar(row[0]) + ": " + row[1]);
+                    }
+                    break;
+                case 'E':
+                    System.out.print("Enter plaintext >>> ");
+                    userPlaintext = menuScan.nextLine();
+                    System.out.print("Enter encryption key >>> ");
+                    userKey = menuScan.nextInt();
+                    userCiphertext = encryptDecryptString(userPlaintext, userKey, false);
+                    System.out.println("Ciphertext:");
+                    System.out.println(userCiphertext);
+                    break;
+                case 'D':
+                    System.out.print("Enter ciphertext >>> ");
+                    userCiphertext = menuScan.nextLine();
+                    System.out.print("Enter encryption key >>> ");
+                    userKey = menuScan.nextInt();
+                    userPlaintext = encryptDecryptString(userCiphertext, userKey, true);
+                    System.out.println("Plaintext:");
+                    System.out.println(userPlaintext);
+                    break;
+                case 'B':
+                    System.out.print("Enter ciphertext >>> ");
+                    userCiphertext = menuScan.nextLine();
+                    System.out.print("Enter crib >>> ");
+                    userCrib = menuScan.nextLine();
+                    bruteForceString(userCiphertext, userCrib);
+                    break;
+                case 'Q':
+                    running = false;
+                    break;
+                default:
+                    break;
+            }
+        }
+        System.out.println("Goodbye!");
     }
 }
