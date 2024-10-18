@@ -4,9 +4,11 @@ public class Lib {
     public int charToInt(char character) {
         return character;
     }
+
     public char intToChar(int integer) {
         return (char) integer;
     }
+
     public int[] stringAsIntArray(String name) {
         String[] stringArray = name.split("");
         int[] intArray = new int[stringArray.length];
@@ -15,6 +17,7 @@ public class Lib {
         }
         return intArray;
     }
+
     public String intArrayAsString(int[] intArray) {
         String[] stringArray = new String[intArray.length];
         for (int i = 0; i < intArray.length; i++) {
@@ -22,6 +25,7 @@ public class Lib {
         }
         return String.join("", stringArray);
     }
+
     public String encryptDecryptString(String plaintext, int key, boolean decrypt) {
         int[] intArray = stringAsIntArray(plaintext);
         int originalInt;
@@ -36,19 +40,18 @@ public class Lib {
                 if (newInt > 90) { // if out of uppercase range
                     newInt -= 26;
                 }
-            }
-            else if (originalInt > 96 && originalInt < 123) { // check if lowercase
+            } else if (originalInt > 96 && originalInt < 123) { // check if lowercase
                 if (newInt > 122) { // if out of lowercase range
                     newInt -= 26;
                 }
-            }
-            else {
+            } else {
                 newInt = originalInt;
             }
             intArray[i] = newInt;
         }
         return intArrayAsString(intArray);
     }
+
     public void bruteForceString(String ciphertext, String crib) {
         String testString;
         for (int i = 1; i < 26; i++) {
@@ -60,6 +63,7 @@ public class Lib {
             }
         }
     }
+
     public int[][] analyseFrequencies(String ciphertext) {
         ciphertext = ciphertext.toUpperCase();
         int[][] frequencies = new int[26][2];
@@ -76,29 +80,40 @@ public class Lib {
         }
         return frequencies;
     }
+
     public void menu() {
         Scanner menuScan = new Scanner(System.in);
+        Scanner intScan = new Scanner(System.in);
         String userPlaintext;
         String userCiphertext;
         String userCrib;
         int userKey;
-        char selectedOption;
+        String selectedOption;
+        char selectedOptionChar = 0;
         boolean running = true;
         int[][] frequencyAnalysis;
+        boolean selectionNotMade = true;
         while (running) {
             System.out.print("""
-                               ---------------------------------
-                               Menu:
-                               (A)nalyse frequencies
-                               (E)ncrypt plaintext
-                               (D)ecrypt ciphertext
-                               (B)ruteforce ciphertext with crib
-                               (Q)uit
-                               ---------------------------------
-                               """);
-            System.out.print("Enter A/E/D/B/Q >>> ");
-            selectedOption = menuScan.nextLine().charAt(0);
-            switch (selectedOption) {
+                    ---------------------------------
+                    Menu:
+                    (A)nalyse frequencies
+                    (E)ncrypt plaintext
+                    (D)ecrypt ciphertext
+                    (B)ruteforce ciphertext with crib
+                    (Q)uit
+                    ---------------------------------
+                    """);
+            selectionNotMade = true;
+            while (selectionNotMade) {
+                System.out.print("Enter A/E/D/B/Q >>> ");
+                selectedOption = menuScan.nextLine();
+                if (!selectedOption.isEmpty()) {
+                    selectedOptionChar = selectedOption.charAt(0);
+                    selectionNotMade = false;
+                }
+            }
+            switch (selectedOptionChar) {
                 case 'A':
                     System.out.print("Enter ciphertext >>> ");
                     userCiphertext = menuScan.nextLine();
@@ -112,7 +127,7 @@ public class Lib {
                     System.out.print("Enter plaintext >>> ");
                     userPlaintext = menuScan.nextLine();
                     System.out.print("Enter encryption key >>> ");
-                    userKey = menuScan.nextInt();
+                    userKey = intScan.nextInt();
                     userCiphertext = encryptDecryptString(userPlaintext, userKey, false);
                     System.out.println("Ciphertext:");
                     System.out.println(userCiphertext);
@@ -121,7 +136,7 @@ public class Lib {
                     System.out.print("Enter ciphertext >>> ");
                     userCiphertext = menuScan.nextLine();
                     System.out.print("Enter encryption key >>> ");
-                    userKey = menuScan.nextInt();
+                    userKey = intScan.nextInt();
                     userPlaintext = encryptDecryptString(userCiphertext, userKey, true);
                     System.out.println("Plaintext:");
                     System.out.println(userPlaintext);
