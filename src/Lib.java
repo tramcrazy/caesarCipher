@@ -92,7 +92,7 @@ public class Lib {
         char selectedOptionChar = 0;
         boolean running = true;
         int[][] frequencyAnalysis;
-        boolean selectionNotMade = true;
+        boolean selectionNotMade;
         while (running) {
             System.out.print("""
                     ---------------------------------
